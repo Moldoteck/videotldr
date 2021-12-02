@@ -16,7 +16,7 @@ import ignoreOldMessageUpdates from '@/middlewares/ignoreOldMessageUpdates'
 import sendHelp from '@/handlers/sendHelp'
 import sequentialize from '@/middlewares/sequentialize'
 import startMongo from '@/helpers/startMongo'
-import handleVideo, { setApi } from './handlers/videoHandler'
+import handleVideo, { getLimit, setApi } from './handlers/videoHandler'
 
 async function runApp() {
   console.log('Starting app...')
@@ -33,6 +33,8 @@ async function runApp() {
   bot.command(['help', 'start'], sendHelp)
   bot.command('language', sendLanguage)
   bot.command('summaryapi', setApi)
+  bot.command('limit', getLimit)
+
   bot.on('::url', handleVideo)
   // Actions
   bot.callbackQuery(localeActions, setLanguage)

@@ -10,6 +10,8 @@ export class User extends FindOrCreate {
   language!: string
   @prop({ default: '' })
   smmry_api!: string
+  @prop({ default: '' })
+  smmry_limit!: string
 }
 
 const UserModel = getModelForClass(User, {
