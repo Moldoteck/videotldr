@@ -186,12 +186,11 @@ async function processCaptions(
 
     //check if errors from summary
     if (summary.body['sm_api_message'] != 'INVALID API KEY') {
-      console.log(JSON.stringify(summary.body))
-      console.log(JSON.stringify(summary.body['sm_api_limitation']))
       let final_response = summary.body['sm_api_content']
         .replaceAll('[BREAK] ', '\n')
         .replaceAll('[BREAK]', '\n')
       ctx.dbuser.smmry_limit = summary.body['sm_api_limitation']
+      await ctx.dbuser.save()
       ctx
         .reply(
           `Summary for ${video_url}\n\n${final_response}\n\nPowered by @videotldrbot`,
