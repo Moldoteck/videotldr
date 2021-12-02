@@ -189,8 +189,13 @@ async function processCaptions(
       let final_response = summary.body['sm_api_content']
         .replaceAll('[BREAK] ', '\n')
         .replaceAll('[BREAK]', '\n')
-      ctx.dbuser.smmry_limit = summary.body['sm_api_limitation']
-      await ctx.dbuser.save()
+      let limit = summary.body['sm_api_limitation']
+        ?.split('mode, ')[1]
+        ?.split(' requests')[0]
+      if (limit != undefined) {
+        ctx.dbuser.smmry_limit = summary.body['sm_api_limitation']
+        await ctx.dbuser.save()
+      }
       ctx
         .reply(
           `Summary for ${video_url}\n\n${final_response}\n\nPowered by @videotldrbot`,
