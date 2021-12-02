@@ -1,0 +1,16 @@
+name: English
+help: |
+  <b>This bot</b> allows you get summaries of youtube videos.
+  It will work only for videos that have captions(either original or auto-generated).
+  For auto-generated captions, it will be able to summarize even if the video is in another language.
+  Since bot is relying on SMMRY API, you need to provide an API key to this bot via /summariapi YOUR_KEY command. <b>it's free</b>.
+  Here are the steps:
+  1- Go here: https://smmry.com/partner
+  2- Register an account here
+  3- Upgrade to partner account here (it's free)
+  4- <b>Go to a private chat with the bot in order to preserve your secrets AND:</b>
+  5- Type your API key in the /summariapi YOUR_KEY command
+  You are now ready to use this bot(100 video summaries per day is the SMMRY limit).
+
+language: Please, select the language.
+language_selected: <b>This bot</b> now speaks English.
