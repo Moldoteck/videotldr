@@ -10,9 +10,13 @@ interface YamlWithName {
 export const localeActions = localesFiles().map((file) => file.split('.')[0])
 
 export function sendLanguage(ctx: Context) {
-  return ctx.reply(ctx.i18n.t('language'), {
-    reply_markup: languageKeyboard(),
-  })
+  return ctx
+    .reply(ctx.i18n.t('language'), {
+      reply_markup: languageKeyboard(),
+    })
+    .catch((e) => {
+      console.log(e)
+    })
 }
 
 export async function setLanguage(ctx: Context) {
@@ -22,9 +26,13 @@ export async function setLanguage(ctx: Context) {
   ctx.dbuser.language = ctx.callbackQuery.data
   await ctx.dbuser.save()
   ctx.i18n.locale(ctx.callbackQuery.data)
-  return ctx.editMessageText(ctx.i18n.t('language_selected'), {
-    parse_mode: 'HTML',
-  })
+  return ctx
+    .editMessageText(ctx.i18n.t('language_selected'), {
+      parse_mode: 'HTML',
+    })
+    .catch((e) => {
+      console.log(e)
+    })
 }
 
 function languageKeyboard() {

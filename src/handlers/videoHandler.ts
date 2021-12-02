@@ -87,14 +87,12 @@ export default async function handleVideo(ctx: Context) {
       })
 
       let availableLang = rs.split('Language formats')[1]
-      console.log(availableLang)
       if (
         availableLang != undefined &&
         !availableLang.includes('has no subtitles')
       ) {
         for (let tag of languageTags) {
           if (availableLang.includes(tag)) {
-            console.log(`Found ${tag}`)
             goodTag = tag
             break
           }
@@ -153,7 +151,6 @@ async function processCaptions(
   caption = he.decode(caption)
   caption = caption.replaceAll('\n', ' ')
   caption = caption.replaceAll(/  +/g, ' ')
-  console.log(caption)
   let err = ''
 
   console.log('Punctuating...')
@@ -206,7 +203,9 @@ async function processCaptions(
       ctx.dbuser.smmry_api = ''
       ctx.dbuser.smmry_limit = ''
       await ctx.dbuser.save()
-      ctx.reply('Your smmry api key is invalid. Please, set a new one.')
+      ctx
+        .reply('Your smmry api key is invalid. Please, set a new one.')
+        .catch((e) => console.log(e))
     }
   } else {
     console.log(`Punctuating body: ${result.body}`)
