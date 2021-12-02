@@ -8,7 +8,7 @@ export class User extends FindOrCreate {
   id!: number
   @prop({ required: true, default: 'en' })
   language!: string
-  @prop({ required: true, default: '' })
+  @prop({ default: '' })
   smmry_api!: string
 }
 
