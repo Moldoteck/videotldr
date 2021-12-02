@@ -23,6 +23,13 @@ export default async function handleVideo(ctx: Context) {
     return
   }
 
+  if (ctx.chat?.type != 'private') {
+    ctx
+      .reply('This feature is temporarily only available in private chats')
+      .catch((e) => console.log(e))
+    return
+  }
+
   let urls = Array<string | undefined>()
 
   if (ctx.message?.caption_entities) {
