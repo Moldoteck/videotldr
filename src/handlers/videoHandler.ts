@@ -193,7 +193,7 @@ async function processCaptions(
         ?.split('mode, ')[1]
         ?.split(' requests')[0]
       if (limit != undefined) {
-        ctx.dbuser.smmry_limit = summary.body['sm_api_limitation']
+        ctx.dbuser.smmry_limit = limit
         await ctx.dbuser.save()
       }
       ctx
