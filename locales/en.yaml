@@ -13,7 +13,7 @@ help: |
   5- Type your API key in the /summaryapi YOUR_KEY command
   You are now ready to use this bot(100 video summaries per day is the SMMRY limit).
 
-  type /limit to see how many more video summaries you can get
+  Type /limit to see how many more video summaries you can get
 
 language: Please, select the language.
 language_selected: <b>This bot</b> now speaks English.
