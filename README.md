@@ -1,4 +1,4 @@
-# Telegram bot starter for extracting video captions and summarizing them
+# Telegram bot for extracting video captions and summarizing them
 
 # Installation and local launch
 
