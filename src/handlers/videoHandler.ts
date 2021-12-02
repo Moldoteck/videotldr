@@ -55,6 +55,9 @@ export default async function handleVideo(ctx: Context) {
     (url) => url.includes('youtube.com') || url.includes('youtu.be')
   )
 
+  //filter out duplicates
+  urls2 = [...new Set(urls2)]
+
   if (!fs.existsSync(`${usr_data}`)) {
     fs.mkdirSync(`${usr_data}`)
   }
