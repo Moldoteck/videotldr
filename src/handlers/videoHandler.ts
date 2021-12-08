@@ -45,10 +45,11 @@ export async function handleVideo(
   }
 
   if (ctx.chat && chat_type_ignore.includes(ctx.chat.type)) {
-    ctx
-      .reply(`This feature is not available in ${ctx.chat.type} chat`)
-      .catch((e) => console.log(e))
-    if (chat_type_ignore != ['channel', 'group', 'supergroup']) return
+    if (chat_type_ignore.includes('private')) {
+      ctx
+        .reply(`This feature is not available in ${ctx.chat.type} chat`)
+        .catch((e) => console.log(e))
+    }
   }
 
   let urls = Array<string | undefined>()
