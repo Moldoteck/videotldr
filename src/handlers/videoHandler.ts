@@ -180,6 +180,7 @@ async function processCaptions(
   let err = ''
 
   console.log('Punctuating...')
+  ctx.replyWithChatAction('typing').catch((e) => console.log(e))
   let result = await ndl('post', 'http://bark.phon.ioc.ee/punctuator', {
     text: caption,
   })
