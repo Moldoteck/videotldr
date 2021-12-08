@@ -1,6 +1,6 @@
 import Context from '@/models/Context'
 import { countUsers } from '@/models/User'
-import { Message, ReplyMessage } from '@grammyjs/types'
+import { Message, MessageEntity, ReplyMessage } from '@grammyjs/types'
 import he = require('he')
 var ndl = require('needle')
 const youtubedl = require('youtube-dl-exec')
@@ -60,12 +60,26 @@ export async function handleVideo(
     urls = message.caption_entities
       .filter((entity) => entity.type == 'url')
       .map((entity) => message?.text?.substr(entity.offset, entity.length))
+    urls = urls.concat(
+      (
+        message.caption_entities.filter(
+          (entity) => entity.type == 'text_link'
+        ) as Array<MessageEntity.TextLinkMessageEntity>
+      ).map((entity) => entity.url)
+    )
   }
   if (message?.entities) {
     urls = urls.concat(
       message.entities
         .filter((entity) => entity.type == 'url')
         .map((entity) => message?.text?.substr(entity.offset, entity.length))
+    )
+    urls = urls.concat(
+      (
+        message.entities.filter(
+          (entity) => entity.type == 'text_link'
+        ) as Array<MessageEntity.TextLinkMessageEntity>
+      ).map((entity) => entity.url)
     )
   }
 
