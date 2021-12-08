@@ -16,7 +16,11 @@ import ignoreOldMessageUpdates from '@/middlewares/ignoreOldMessageUpdates'
 import sendHelp from '@/handlers/sendHelp'
 import sequentialize from '@/middlewares/sequentialize'
 import startMongo from '@/helpers/startMongo'
-import handleVideo, { getLimit, setApi } from './handlers/videoHandler'
+import handleVideo, {
+  countChats,
+  getLimit,
+  setApi,
+} from './handlers/videoHandler'
 
 async function runApp() {
   console.log('Starting app...')
