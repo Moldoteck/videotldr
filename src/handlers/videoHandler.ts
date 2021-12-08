@@ -198,40 +198,49 @@ async function processCaptions(
       .catch((e) => console.log(e))
     err = 'Error punctuation'
   }
-  if (result.body.split('.').length > 7 && err == '') {
-    console.log('Summarizing...')
-    ctx.replyWithChatAction('typing').catch((e) => console.log(e))
-    let summary = await ndl(
-      'post',
-      `https://api.smmry.com/&SM_API_KEY=${ctx.dbuser.smmry_api}&SM_WITH_BREAK`,
-      { sm_api_input: result.body },
-      { headers: { Expect: '' }, follow_max: 5 }
-    )
+  if (err == '') {
+    if (result.body.split('.').length > 7) {
+      console.log('Summarizing...')
+      ctx.replyWithChatAction('typing').catch((e) => console.log(e))
+      let summary = await ndl(
+        'post',
+        `https://api.smmry.com/&SM_API_KEY=${ctx.dbuser.smmry_api}&SM_WITH_BREAK`,
+        { sm_api_input: result.body },
+        { headers: { Expect: '' }, follow_max: 5 }
+      )
 
-    //check if errors from summary
-    if (summary.body['sm_api_message'] != 'INVALID API KEY') {
-      let final_response = summary.body['sm_api_content']
-        .replaceAll('[BREAK] ', '\n')
-        .replaceAll('[BREAK]', '\n')
-      let limit = summary.body['sm_api_limitation']
-        ?.split('mode, ')[1]
-        ?.split(' requests')[0]
-      if (limit != undefined) {
-        ctx.dbuser.smmry_limit = limit
+      //check if errors from summary
+      if (summary.body['sm_api_message'] != 'INVALID API KEY') {
+        let final_response = summary.body['sm_api_content']
+          .replaceAll('[BREAK] ', '\n')
+          .replaceAll('[BREAK]', '\n')
+        let limit = summary.body['sm_api_limitation']
+          ?.split('mode, ')[1]
+          ?.split(' requests')[0]
+        if (limit != undefined) {
+          ctx.dbuser.smmry_limit = limit
+          await ctx.dbuser.save()
+        }
+        ctx
+          .reply(
+            `Summary for ${video_url}\n\n${final_response}\n\nPowered by @videotldrbot`,
+            { reply_to_message_id: ctx.message?.message_id }
+          )
+          .catch((e) => console.log(e))
+      } else {
+        ctx.dbuser.smmry_api = ''
+        ctx.dbuser.smmry_limit = ''
         await ctx.dbuser.save()
+        ctx
+          .reply('Your smmry api key is invalid. Please, set a new one.')
+          .catch((e) => console.log(e))
       }
+    } else {
       ctx
         .reply(
-          `Summary for ${video_url}\n\n${final_response}\n\nPowered by @videotldrbot`,
+          `Summary for ${video_url}\n\n${result.body}\n\nPowered by @videotldrbot`,
           { reply_to_message_id: ctx.message?.message_id }
         )
-        .catch((e) => console.log(e))
-    } else {
-      ctx.dbuser.smmry_api = ''
-      ctx.dbuser.smmry_limit = ''
-      await ctx.dbuser.save()
-      ctx
-        .reply('Your smmry api key is invalid. Please, set a new one.')
         .catch((e) => console.log(e))
     }
   } else {
