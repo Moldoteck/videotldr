@@ -11,9 +11,11 @@ help: |
   3- Upgrade to partner account there (it's free)
   4- <b>Go to a private chat with the bot in order to preserve your secrets AND:</b>
   5- Type your API key in the /summaryapi YOUR_KEY command
+  For example: if your API key is: <code>123456789</code>, you can type: <code>/summaryapi 123456789</code>
   You are now ready to use this bot(100 video summaries per day is the SMMRY limit).
 
   Type /limit to see how many more video summaries you can get
+  Type /summarize in groups as reply to a message to get a summary of the video
 
 language: Please, select the language.
 language_selected: <b>This bot</b> now speaks English.

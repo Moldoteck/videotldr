@@ -1,6 +1,6 @@
 import Context from '@/models/Context'
 import { countUsers } from '@/models/User'
-import { Message } from '@grammyjs/types'
+import { Message, ReplyMessage } from '@grammyjs/types'
 import he = require('he')
 var ndl = require('needle')
 const youtubedl = require('youtube-dl-exec')
@@ -34,7 +34,7 @@ export async function handleReply(ctx: Context) {
 
 export async function handleVideo(
   ctx: Context,
-  message: Message,
+  message: Message | ReplyMessage,
   chat_type_ignore: Array<string>
 ) {
   if (ctx.dbuser.smmry_api == null || ctx.dbuser.smmry_api == '') {
