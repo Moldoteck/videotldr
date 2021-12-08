@@ -49,6 +49,8 @@ export async function handleVideo(
       ctx
         .reply(`This feature is not available in ${ctx.chat.type} chat`)
         .catch((e) => console.log(e))
+    } else {
+      return
     }
   }
 
