@@ -1,4 +1,5 @@
 import Context from '@/models/Context'
+import { countUsers } from '@/models/User'
 import he = require('he')
 var ndl = require('needle')
 const youtubedl = require('youtube-dl-exec')
@@ -247,5 +248,12 @@ export async function getLimit(ctx: Context) {
     ctx
       .reply('You have no key set or limit is not set yet')
       .catch((e) => console.log(e))
+  }
+}
+
+export async function countChats(ctx: Context) {
+  if (ctx.message.from.id == 180001222) {
+    let chats = await countUsers()
+    ctx.reply(`User number is ${chats}`).catch((e) => console.log(e))
   }
 }

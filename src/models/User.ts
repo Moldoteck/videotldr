@@ -21,3 +21,8 @@ const UserModel = getModelForClass(User, {
 export function findOrCreateUser(id: number) {
   return UserModel.findOrCreate({ id })
 }
+
+//count users
+export function countUsers() {
+  return UserModel.countDocuments()
+}

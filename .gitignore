@@ -1,4 +1,5 @@
 node_modules
+usr_data
 dist
 .env
 *.log
