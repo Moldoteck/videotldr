@@ -170,7 +170,7 @@ export async function handleVideo(
         } else {
           console.log('No luck...')
           ctx
-            .reply("Can't get video subs", {
+            .reply(`Can't get video subs for ${id}`, {
               reply_to_message_id: ctx.message?.message_id,
             })
             .catch((e) => console.log(e))
