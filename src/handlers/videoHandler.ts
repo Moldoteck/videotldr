@@ -48,7 +48,7 @@ export async function handleVideo(
     ctx
       .reply(`This feature is not available in ${ctx.chat.type} chat`)
       .catch((e) => console.log(e))
-    return
+    if (chat_type_ignore != ['channel', 'group', 'supergroup']) return
   }
 
   let urls = Array<string | undefined>()
@@ -97,6 +97,7 @@ export async function handleVideo(
 
   for (let i = 0; i < urls2.length; ++i) {
     try {
+      ctx.replyWithChatAction('typing').catch((e) => console.log(e))
       let goodTag = ''
       let id = urls2[i]
       let file_path = `${message_dir}/${i}`
