@@ -16,9 +16,11 @@ import ignoreOldMessageUpdates from '@/middlewares/ignoreOldMessageUpdates'
 import sendHelp from '@/handlers/sendHelp'
 import sequentialize from '@/middlewares/sequentialize'
 import startMongo from '@/helpers/startMongo'
-import handleVideo, {
+import {
+  handleMessage,
   countChats,
   getLimit,
+  handleReply,
   setApi,
 } from './handlers/videoHandler'
 
@@ -38,9 +40,10 @@ async function runApp() {
   bot.command('language', sendLanguage)
   bot.command('summaryapi', setApi)
   bot.command('limit', getLimit)
+  bot.command('summarize', handleReply)
   bot.command('countChats', countChats)
 
-  bot.on('::url', handleVideo)
+  bot.on('::url', handleMessage)
   // Actions
   bot.callbackQuery(localeActions, setLanguage)
   // Errors

@@ -1,9 +1,11 @@
 import Context from '@/models/Context'
 import { countUsers } from '@/models/User'
+import { Message } from '@grammyjs/types'
 import he = require('he')
 var ndl = require('needle')
 const youtubedl = require('youtube-dl-exec')
 var fs = require('fs')
+const crypto = require('crypto')
 
 const usr_data = './usr_data/'
 
@@ -16,7 +18,25 @@ function extractID(url: string) {
   }
 }
 
-export default async function handleVideo(ctx: Context) {
+export async function handleMessage(ctx: Context) {
+  if (ctx.message) {
+    handleVideo(ctx, ctx.message, ['channel', 'group', 'supergroup'])
+  }
+}
+
+export async function handleReply(ctx: Context) {
+  if (ctx.message) {
+    if (ctx.message.reply_to_message) {
+      handleVideo(ctx, ctx.message.reply_to_message, ['private'])
+    }
+  }
+}
+
+export async function handleVideo(
+  ctx: Context,
+  message: Message,
+  chat_type_ignore: Array<string>
+) {
   if (ctx.dbuser.smmry_api == null || ctx.dbuser.smmry_api == '') {
     ctx
       .reply('You need to set your smmry api key first. Please see /help')
@@ -24,27 +44,25 @@ export default async function handleVideo(ctx: Context) {
     return
   }
 
-  if (ctx.chat?.type != 'private') {
+  if (ctx.chat && chat_type_ignore.includes(ctx.chat.type)) {
     ctx
-      .reply('This feature is temporarily only available in private chats')
+      .reply(`This feature is not available in ${ctx.chat.type} chat`)
       .catch((e) => console.log(e))
     return
   }
 
   let urls = Array<string | undefined>()
 
-  if (ctx.message?.caption_entities) {
-    urls = ctx.message.caption_entities
+  if (message?.caption_entities) {
+    urls = message.caption_entities
       .filter((entity) => entity.type == 'url')
-      .map((entity) => ctx.message?.text?.substr(entity.offset, entity.length))
+      .map((entity) => message?.text?.substr(entity.offset, entity.length))
   }
-  if (ctx.message?.entities) {
+  if (message?.entities) {
     urls = urls.concat(
-      ctx.message.entities
+      message.entities
         .filter((entity) => entity.type == 'url')
-        .map((entity) =>
-          ctx.message?.text?.substr(entity.offset, entity.length)
-        )
+        .map((entity) => message?.text?.substr(entity.offset, entity.length))
     )
   }
 
@@ -64,10 +82,11 @@ export default async function handleVideo(ctx: Context) {
   }
 
   let usr_dir = `${usr_data}/${ctx.from?.id}/`
-  let message_dir = `${usr_dir}${ctx.message?.message_id}/`
+  let msg_id = crypto.randomBytes(16).toString('hex')
+  let message_dir = `${usr_dir}${msg_id}/`
 
-  if (!fs.existsSync(`${usr_data}/${ctx.from?.id}`)) {
-    fs.mkdirSync(`${usr_data}/${ctx.from?.id}`)
+  if (!fs.existsSync(`${usr_dir}`)) {
+    fs.mkdirSync(`${usr_dir}`)
   }
 
   if (urls2.length > 0 && !fs.existsSync(message_dir)) {
@@ -75,13 +94,12 @@ export default async function handleVideo(ctx: Context) {
   }
 
   let languageTags = ['en-GB', 'en-US', 'en']
-  let goodTag = ''
 
   for (let i = 0; i < urls2.length; ++i) {
     try {
       let goodTag = ''
       let id = urls2[i]
-      let file_path = `${usr_data}/${ctx.from?.id}/${ctx.message?.message_id}/${i}`
+      let file_path = `${message_dir}/${i}`
       console.log('Downloading...')
 
       let rs = await youtubedl(id, {
