@@ -252,7 +252,7 @@ export async function getLimit(ctx: Context) {
 }
 
 export async function countChats(ctx: Context) {
-  if (ctx.message.from.id == 180001222) {
+  if (ctx?.message?.from?.id == 180001222) {
     let chats = await countUsers()
     ctx.reply(`User number is ${chats}`).catch((e) => console.log(e))
   }

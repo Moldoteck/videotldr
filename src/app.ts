@@ -34,6 +34,7 @@ async function runApp() {
   bot.command('language', sendLanguage)
   bot.command('summaryapi', setApi)
   bot.command('limit', getLimit)
+  bot.command('countChats', countChats)
 
   bot.on('::url', handleVideo)
   // Actions
