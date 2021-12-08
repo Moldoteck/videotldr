@@ -15,7 +15,7 @@ help: |
   You are now ready to use this bot(100 video summaries per day is the SMMRY limit).
 
   Type /limit to see how many more video summaries you can get
-  Type /summarize in groups as reply to a message to get a summary of the video
+  Type /tldr in groups as reply to a message to get a summary of the video
 
 language: Please, select the language.
 language_selected: <b>This bot</b> now speaks English.

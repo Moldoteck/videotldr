@@ -40,7 +40,7 @@ async function runApp() {
   bot.command('language', sendLanguage)
   bot.command('summaryapi', setApi)
   bot.command('limit', getLimit)
-  bot.command('summarize', handleReply)
+  bot.command('tldr', handleReply)
   bot.command('countChats', countChats)
 
   bot.on('::url', handleMessage)
