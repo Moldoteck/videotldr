@@ -169,6 +169,11 @@ export async function handleVideo(
           await processCaptions(ctx, `${file_path}.en.ttml`, id)
         } else {
           console.log('No luck...')
+          ctx
+            .reply("Can't get video subs", {
+              reply_to_message_id: ctx.message?.message_id,
+            })
+            .catch((e) => console.log(e))
         }
       }
     } catch (e) {
