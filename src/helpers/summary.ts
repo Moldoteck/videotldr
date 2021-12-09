@@ -4,7 +4,7 @@ export async function summarize(
   content: string,
   api_key: string,
   nr_sentences: number = 7
-) {
+): Promise<Array<string | undefined>> {
   let summary = await ndl(
     'post',
     `https://api.smmry.com/&SM_API_KEY=${api_key}&SM_LENGTH=${nr_sentences}&SM_WITH_BREAK`,

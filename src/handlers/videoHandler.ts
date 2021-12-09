@@ -221,10 +221,7 @@ async function processCaptions(
     return
   }
 
-  console.log(caption)
-
   let punctuated = await punctuate(caption)
-  console.log(punctuated)
 
   if (!punctuated) {
     ctx
@@ -237,10 +234,10 @@ async function processCaptions(
     if (punctuated.split('.').length > 7) {
       console.log('Summarizing...')
       ctx.replyWithChatAction('typing').catch((e) => console.log(e))
-      let [message, summary, limit] = await summarize(
-        punctuated,
-        ctx.dbuser.smmry_api
-      )
+      let result = await summarize(punctuated, ctx.dbuser.smmry_api)
+      let message = result[0]
+      let summary = result[1]
+      let limit = result[2]
       console.log([message, summary, limit])
 
       //check if errors from summary
