@@ -12,6 +12,7 @@ export async function summarize(
     { headers: { Expect: '' }, follow_max: 5 }
   )
 
+  console.log(summary.body)
   let message = summary.body['sm_api_message']
   let summaised = undefined
   let limit = undefined
