@@ -26,6 +26,7 @@ export async function summarize(
   } else {
     console.log(message)
   }
+  console.log([message, summaised, limit])
 
   return [message, summaised, limit]
 }
