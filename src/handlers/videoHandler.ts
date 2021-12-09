@@ -221,6 +221,8 @@ async function processCaptions(
     return
   }
 
+  console.log(caption)
+
   let punctuated = await punctuate(caption)
 
   if (!punctuated) {
