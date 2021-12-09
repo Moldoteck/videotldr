@@ -28,7 +28,14 @@ export async function handleMessage(ctx: Context) {
 
 export async function handleSubs(ctx: Context) {
   if (ctx.message) {
-    handleVideo(ctx, ctx.message, ['channel', 'group', 'supergroup'], 'subs')
+    if (ctx.message.reply_to_message) {
+      handleVideo(
+        ctx,
+        ctx.message.reply_to_message,
+        ['channel', 'group', 'supergroup'],
+        'subs'
+      )
+    }
   }
 }
 
