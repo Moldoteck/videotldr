@@ -238,6 +238,7 @@ async function processCaptions(
         punctuated,
         ctx.dbuser.smmry_api
       )
+      console.log([message, summary, limit])
 
       //check if errors from summary
       if (message && message != 'INVALID API KEY') {

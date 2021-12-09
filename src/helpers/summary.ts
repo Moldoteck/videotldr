@@ -23,6 +23,8 @@ export async function summarize(
     limit = summary['sm_api_limitation']
       ?.split('mode, ')[1]
       ?.split(' requests')[0]
+  } else {
+    console.log(message)
   }
 
   return [message, summaised, limit]
