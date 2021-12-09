@@ -12,16 +12,15 @@ export async function summarize(
     { headers: { Expect: '' }, follow_max: 5 }
   )
 
-  console.log(summary.body)
-  let message = summary['sm_api_message']
+  let message = summary.body['sm_api_message']
   let summaised = undefined
   let limit = undefined
 
   if (message && message != 'INVALID API KEY') {
-    summaised = summary['sm_api_content']
+    summaised = summary.body['sm_api_content']
       .replaceAll('[BREAK] ', '\n')
       .replaceAll('[BREAK]', '\n')
-    limit = summary['sm_api_limitation']
+    limit = summary.body['sm_api_limitation']
       ?.split('mode, ')[1]
       ?.split(' requests')[0]
   } else {
