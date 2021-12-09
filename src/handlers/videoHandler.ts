@@ -224,6 +224,7 @@ async function processCaptions(
   console.log(caption)
 
   let punctuated = await punctuate(caption)
+  console.log(punctuated)
 
   if (!punctuated) {
     ctx
