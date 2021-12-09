@@ -245,7 +245,6 @@ async function processCaptions(
       let message = result[0]
       let summary = result[1]
       let limit = result[2]
-      console.log([message, summary, limit])
 
       //check if errors from summary
       if (message != 'INVALID API KEY') {
