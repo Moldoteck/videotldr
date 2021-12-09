@@ -247,7 +247,7 @@ async function processCaptions(
       let limit = result[2]
 
       //check if errors from summary
-      if (message) {
+      if (!message) {
         if (limit != undefined) {
           ctx.dbuser.smmry_limit = limit
           await ctx.dbuser.save()
