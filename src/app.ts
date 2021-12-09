@@ -42,7 +42,7 @@ async function runApp() {
   bot.command('summaryapi', setApi)
   bot.command('limit', getLimit)
   bot.command('tldr', handleReply)
-  bot.command('subs', handleSubs)
+  // bot.command('subs', handleSubs)
   bot.command('countChats', countChats)
 
   bot.on('::url', handleMessage)

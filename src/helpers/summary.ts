@@ -17,7 +17,7 @@ export async function summarize(
   let summaised = undefined
   let limit = undefined
 
-  if (message && message != 'INVALID API KEY') {
+  if (!message) {
     summaised = summary.body['sm_api_content']
       .replaceAll('[BREAK] ', '\n')
       .replaceAll('[BREAK]', '\n')
