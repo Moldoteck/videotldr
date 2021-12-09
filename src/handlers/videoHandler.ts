@@ -247,19 +247,17 @@ async function processCaptions(
       let limit = result[2]
 
       //check if errors from summary
-      if (message != 'INVALID API KEY') {
-        if (message) {
-          if (limit != undefined) {
-            ctx.dbuser.smmry_limit = limit
-            await ctx.dbuser.save()
-          }
-          ctx
-            .reply(
-              `Summary for ${video_url}\n\n${summary}\n\nPowered by @videotldrbot`,
-              { reply_to_message_id: ctx.message?.message_id }
-            )
-            .catch((e) => console.log(e))
+      if (message) {
+        if (limit != undefined) {
+          ctx.dbuser.smmry_limit = limit
+          await ctx.dbuser.save()
         }
+        ctx
+          .reply(
+            `Summary for ${video_url}\n\n${summary}\n\nPowered by @videotldrbot`,
+            { reply_to_message_id: ctx.message?.message_id }
+          )
+          .catch((e) => console.log(e))
       } else {
         ctx.dbuser.smmry_api = ''
         ctx.dbuser.smmry_limit = ''
