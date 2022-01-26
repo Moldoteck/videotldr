@@ -210,7 +210,7 @@ async function processCaptions(
   action: string = 'all'
 ) {
   let caption: string = fs.readFileSync(file_path, 'utf8').toString()
-  caption = caption.replace(/<[^>]*>?/gm, '')
+  caption = caption.replace(/<[^>]*>?/gm, ' ')
   caption = he.decode(caption)
   caption = caption.replaceAll('\n', ' ')
   caption = caption.replaceAll(/  +/g, ' ')
